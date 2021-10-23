@@ -1,0 +1,45 @@
+<template>
+    <lightning-card class="slds-theme_shade" title="Sensor-Events Details" icon-name="standard:catalog" variant="base">
+        <div slot="actions"></div>
+        <div class="slds-card__body_inner">
+            <ul class="slds-has-dividers_bottom-space">
+                <li class="slds-item">
+                    <template for:each={sensors} for:item="sensor">
+                        <div class="slds-summary-detail slds-is-open" key={sensor.Id}>
+                            <lightning-button-icon class="slds-m-top_small slds-m-right_x-small" alternative-text=""
+                                icon-class="" variant="bare" value={sensor.Name}
+                                type="button" icon-name={sensor.switchSensorEvent} size="medium"
+                                onclick={handleClick}>
+                            </lightning-button-icon>
+
+                            <div class="slds-summary-detail__title slds-m-around_x-small" key={sensor.Id}>
+                                <div class="slds-text-heading_medium">Sensor Name: {sensor.Name}</div>
+								<div class="slds-text-heading_small">Max Vector Length: {sensor.Max_Vectors_Length__c}</div>
+                            </div>
+                        </div>
+                        <template if:true={sensor.displaySensorEvent} for:each={sensor.Sensor_Events__r}
+                            for:item="sensorEvent">
+                            <div class="slds-summary-detail__content" key={sensorEvent.Id}>
+                                <lightning-layout
+                                    class="slds-p-around_small slds-m-around_x-small slds-card slds-card_boundary"
+                                    horizontal-align="spread" vertical-align="start">
+                                    <lightning-layout-item>
+                                        <lightning-record-edit-form object-api-name="Sensor_Event__c" record-id={sensorEvent.Id}>
+											<lightning-input-field field-name="X_Value__c"> </lightning-input-field>
+											<lightning-input-field field-name="Y_Value__c"> </lightning-input-field>
+											<lightning-input-field field-name="Z_Value__c"> </lightning-input-field>
+											<div class="slds-var-m-top_medium">
+												<lightning-button variant="brand" type="submit" label="Save">
+												</lightning-button>
+											</div>
+										</lightning-record-edit-form>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+                        </template>
+                    </template>
+                </li>
+            </ul>
+        </div>
+    </lightning-card>
+    </template>
